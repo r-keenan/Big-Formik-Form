@@ -1,6 +1,6 @@
 import { findByLabelText } from "@testing-library/react";
 import React from "react";
-import { Styles } from "../Styles/SignUpFormStyles.js";
+import { Styles } from "./Styles/SignUpFormStyles";
 import { Formik, useField, Form, Field, FieldArray } from "formik";
 import * as Yup from "yup";
 
@@ -15,6 +15,20 @@ const CustomTextInput = ({ label, ...props }) => {
     <>
       <label htmlFor={props.id || props.name}>{label}</label>
       <input className="text-input" {...field} {...props} />
+      {meta.touched && meta.error ? (
+        <div className="error">{meta.error}</div>
+      ) : null}
+    </>
+  );
+};
+
+const CustomTextArea = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+
+  return (
+    <>
+      <label htmlFor={props.id || props.name}>{label}</label>
+      <textarea className="text-area" {...field} {...props} />
       {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
       ) : null}
@@ -263,11 +277,11 @@ const SignUpDonor = () => {
               type="text"
               placeholder=""
             />
-            <CustomTextInput
+            <CustomTextArea
               label="Description"
               name="description"
-              type="text"
-              placeholder=""
+              type="text area"
+              placeholder="Please fill out the description of your non-profit here."
             />
             <CustomTextInput
               label="Annual Donation Budget"
